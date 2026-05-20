@@ -1,26 +1,48 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #FFFFFF;
+  --foreground: #0B1B3D;
+  --navy: #0B1B3D;
+  --teal: #117C8A;
+  --mint: #38BFA7;
+  --border-color: #E2E8F0;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-navy: var(--navy);
+  --color-teal: var(--teal);
+  --color-mint: var(--mint);
+  --color-border: var(--border-color);
+  
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+}
+
+::selection {
+  background-color: var(--teal);
+  color: white;
+}
+
+/* Elegant background pattern */
+.bg-grid-slate {
+  background-size: 40px 40px;
+  background-image: linear-gradient(to right, rgba(11, 27, 61, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(11, 27, 61, 0.05) 1px, transparent 1px);
+}
+
+.mask-radial-faded {
+  mask-image: radial-gradient(ellipse at top, black, transparent 70%);
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
 }
