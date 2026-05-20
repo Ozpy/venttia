@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 
@@ -37,21 +37,9 @@ const FadeUp = ({ children, delay = 0, className = "" }: { children: React.React
   </motion.div>
 );
 
-const FloatingBlob = ({ className, delay = 0 }: { className: string, delay?: number }) => (
-  <motion.div
-    animate={{
-      y: [0, -30, 0],
-      x: [0, 20, 0],
-      scale: [1, 1.1, 1],
-    }}
-    transition={{
-      duration: 15,
-      repeat: Infinity,
-      repeatType: "reverse",
-      ease: "easeInOut",
-      delay
-    }}
-    className={`absolute pointer-events-none rounded-full blur-[120px] ${className}`}
+const FloatingBlob = ({ className }: { className: string }) => (
+  <div
+    className={`absolute pointer-events-none rounded-full blur-[120px] opacity-80 ${className}`}
   />
 );
 
@@ -138,12 +126,10 @@ const ScrollRevealText = ({ text, className = "" }: { text: string, className?: 
 
 export default function Home() {
   const [scrolled, setScrolled] = useState(false);
-  const { scrollYProgress } = useScroll();
-  const yParallax = useTransform(scrollYProgress, [0, 1], [0, 200]);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -154,7 +140,7 @@ export default function Home() {
         className="absolute inset-0 z-0 pointer-events-none bg-grid-slate mask-radial-faded opacity-55"
       />
       <FloatingBlob className="top-[-10%] left-[-10%] w-[50%] h-[50%] bg-teal/20" />
-      <FloatingBlob className="bottom-[150px] right-[-10%] w-[40%] h-[40%] bg-mint/20" delay={2} />
+      <FloatingBlob className="bottom-[150px] right-[-10%] w-[40%] h-[40%] bg-mint/20" />
       
       {/* 1) NAV */}
       <motion.nav 
@@ -193,7 +179,7 @@ export default function Home() {
       <main className="relative z-10 flex-1 flex flex-col">
         {/* 2) HERO */}
         <section className="pt-28 pb-20 px-6 md:pt-36 md:pb-32 max-w-6xl mx-auto w-full text-center md:text-left relative">
-          <motion.div style={{ y: yParallax }} className="absolute right-0 top-20 w-64 h-64 bg-mint/10 rounded-full blur-[80px] -z-10 hidden md:block" />
+          <div className="absolute right-0 top-20 w-64 h-64 bg-mint/10 rounded-full blur-[80px] -z-10 hidden md:block" />
           
           <div className="relative z-10">
             <Pill>Modernizamos negocios locales sin complicaciones</Pill>
